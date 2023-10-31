@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="section_1">
+	<video id="remoteVideo" autoplay playsinline></video>
+	<video id="webcamVideo" class="center" autoplay playsinline muted></video><br/>
+	<button id="webcamButton" class="btn center hide">Start Camera</button>
+ </div>
+
+ <div class="controls center">
+	<div class="before_call_control" id="before_call_control">
+	  <button class="btn btn-primary" id="callButton"> Create Invitation </button>  
+		 OR
+	  <button class="btn btn-primary" id="answerButton"> Join Invitation </button>
+	</div>
+	<div class="on_call_control hide" id="on_call_control">
+	  <button class="btn btn-danger" id="hangupButton" disabled> Hang Up </button>
+	</div>
+ </div>
+
+ <div class="information">
+	<div class="invitation_code center">
+	  <div>
+		 <input id="callInput" /> 
+		 <!-- <button class="btn" id="copy"> Copy </button> -->
+		 <button class="btn" id="share"> Share </button>
+	  </div>
+	  <div class="info" id="invitation_info">
+		 enter invitation code here
+	  </div>
+	</d>
+ </div>
+<!-- partial -->
+  <script src='https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js'></script>
+<script src='https://www.gstatic.com/firebasejs/8.1.1/firebase-firestore.js'></script>
+<script src='https://www.gstatic.com/firebasejs/8.4.1/firebase-analytics.js'></script><script  src="./script.js"></script>
+
+</body>
+</html>
