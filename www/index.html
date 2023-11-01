@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+		/>
+		<meta
+			name="description"
+			content=" peer-to-peer, encrypted, Video streaming protocol"
+		/>
+		<meta
+			name="keywords"
+			content="group video chat, video communication, multiparty video chat, video chat, webrtc, peer to peer, p2p"
+		/>
+		<meta name="application-name" content="Talk" />
+		<!-- Meta data for link fetching -->
+		<meta property="og:url" content="https://tlk.li" />
+		<meta property="og:image" content="https://tlk.li/og-image.png" />
+		<meta property="og:title" content="Talk - Free group video call for the web" />
+		<meta
+			property="og:description"
+			content=" peer-to-peer, encrypted, Video streaming protocol"
+		/>
+
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+		<link rel="icon" href="/favicon.svg" />
+		<link rel="stylesheet" href="/home.css" />
+		<title>Talk - Free group video call for the web</title>
+		<script defer src="/vue.global.prod.js"></script>
+		<script defer src="/home.js"></script>
+
+		<!-- ANALYTICS_SCRIPT -->
+	</head>
+
+	<body>
+		<main class="wrap">
+			<div id="app" class="row">
+				<h1 class="flex"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Phaseshift_across_resonance_%28forced_harmonic_oscillator%29.gif" id="logo" /> FREQVNC<img src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Phaseshift_across_resonance_%28forced_harmonic_oscillator%29.gif" id="logo" /></h1>
+				<h2>P2P VNC SERVER using NEARBY SYNC.</h2>
+				<h3>No sign ups. No downloads.<br />Works in all major Android Autos.</h3>
+				<div class="flex">
+					<div id="roomurl">
+						<span>freqvnc/</span
+						><input
+							type="text"
+							placeholder="KA03BV2399"
+							pattern="[a-zA-Z0-9]{8}"
+							v-model="roomId"
+							v-on:keydown.enter="goToRoom"
+						/>
+					</div>
+					<a v-bind:href="'/'+roomId" class="button">Start</a>
+				</div>
+
+				<p><a href="javascript:void(0)" v-on:click="generateRandomRoomId">Generate nearby vehicle chasis slot</a></p>
+			</div>
+			<div class="spacer"></div>
+
+
+			<div class="row small light">
+				&copy; FREQ.vnc &middot; 
+				
+			</div>
+
+			<br /><br />
+		</main>
+	</body>
+</html>

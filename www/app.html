@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+		/>
+		<meta
+			name="description"
+			content=" peer-to-peer, encrypted, Video streaming protocol"
+		/>
+		<meta
+			name="keywords"
+			content="group video chat, video communication, multiparty video chat, video chat, webrtc, peer to peer, p2p"
+		/>
+		<meta name="application-name" content="Talk" />
+		<!-- Meta data for link fetching -->
+		<meta property="og:url" content="https://tlk.li" />
+		<meta property="og:image" content="https://tlk.li/og-image.png" />
+		<meta property="og:title" content="Talk - Free video calling for the web" />
+		<meta
+			property="og:description"
+			content=" peer-to-peer, encrypted, Video streaming protocol"
+		/>
+
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+		<link rel="icon" href="/favicon.svg" />
+		<link rel="stylesheet" href="/app.css" />
+		<script defer src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+		<script defer src="/socket.io/socket.io.js"></script>
+		<script defer src="/vue.global.prod.js"></script>
+		<script defer src="app.js"></script>
+		<script defer src="webrtc.js"></script>
+		<title>Talk - Free video calling for the web</title>
+		<!-- ANALYTICS_SCRIPT -->
+	</head>
+
+	<body>
+		<section id="blanket"></section>
+		<section id="videos"></section>
+		<main id="app">
+			<div id="appWrap" v-bind:style="'display:block;'">
+				<div id="intro" v-if="!callInitiated && !showChat && !showSettings">
+					<h3>You are about to enter a VNC SYNC.</h3>
+					<p> peer-to-peer, encrypted,for Android Auto.</p>
+					<p>
+						<label v-bind:class="(nameError && !name ? 'red' : '')">Please enter your vehicle name</label>
+						<input type="text" v-model="name" v-on:keyup="updateName" placeholder="Your name" />
+					</p>
+					<br />
+
+					<div class="footer">
+						
+
+						<button v-on:click="initiateCall">Proceed</button>
+					</div>
+				</div>
+
+				<div id="callFeedbackWrap" v-if="callEnded">
+					<div id="callFeedback">
+						<div class="bold">Your VNC has been disconnected. You can now close this window.</div>
+						<br />
+
+						<div id="feedbackWrap">
+							<div class="question italic">How was the quality of VNC?</div>
+							<div class="thankYou bold">Thank you for your feedback</div>
+							<div id="feedbackButtons">
+								<button data-cabin-event="call-quality-nah" v-on:click="onCallFeedback">😟<br />Nah!</button>
+								<button data-cabin-event="call-quality-meh" v-on:click="onCallFeedback">😐<br />Meh!</button>
+								<button data-cabin-event="call-quality-yay" v-on:click="onCallFeedback">😀<br />Yay!</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div id="chatWrap" v-if="showChat">
+					<div id="chats" ref="chatContainer">
+						<div class="chat" v-for="(chat, i) in chats" v-bind:key="i">
+							<span class="name">{{chat.name}}</span>
+							<span class="date light"> &middot; {{formatDate(chat.date)}}</span>
+							<div class="message" v-html="linkify(chat.message)"></div>
+						</div>
+						<div id="noChat" class="light" v-if="!chats.length"><small>No chat messages.</small></div>
+					</div>
+					<div id="composeBox">
+						<div id="placeholder" v-if="typing.length <= 0">Type message...</div>
+						<div
+							id="compose"
+							contenteditable="true"
+							v-on:keydown.enter="sendChat"
+							v-on:input="edit($event)"
+							v-on:paste="paste($event)"
+						></div>
+					</div>
+					<small class="light">Press enter to submit</small>
+				</div>
+
+				<div id="settings" v-if="showSettings">
+					<div id="name" class="label">
+						<span>Name:</span>
+						<input type="text" placeholder="Enter your name" v-model="name" v-on:keyup="updateNameAndPublish" />
+					</div>
+					<hr class="separator" />
+
+					<div class="label">Camera 📹</div>
+					<div v-for="(videoDevice, i) in videoDevices" v-bind:key="videoDevice.deviceId">
+						<div
+							v-bind:class="'link indent '+(selectedVideoDeviceId === videoDevice.deviceId ? 'active' : '')"
+							v-on:click="changeCamera(videoDevice.deviceId)"
+						>
+							{{videoDevice.label}}
+						</div>
+					</div>
+					<hr class="separator" />
+
+					<div class="label">Microphone 🎙️</div>
+					<div v-for="(audioDevice, i) in audioDevices" v-bind:key="audioDevice.deviceId">
+						<div
+							v-bind:class="'link indent '+(selectedAudioDeviceId === audioDevice.deviceId ? 'active' : '')"
+							v-on:click="changeMicrophone(audioDevice.deviceId)"
+						>
+							{{audioDevice.label}}
+						</div>
+					</div>
+					<hr class="separator" />
+
+				
+					<hr class="separator" />
+					<div class="link" v-on:click="toggleSelfVideoMirror">
+						Mirror / Unmirror
+						<small class="light">(self-view)</small>
+					</div>
+				</div>
+
+				<div id="actionsWrap" v-if="callInitiated">
+					<div id="actions">
+					
+						<button v-bind:class="'icon-video'+(videoEnabled ? '' : '-off')" v-on:click="videoToggle"></button>
+					
+						<button v-bind:class="'icon-exit'" v-on:click="exit"></button>
+						<button
+							v-bind:class="'icon-more-horizontal '+(showSettings ? 'active' : '')"
+							v-on:click="showSettings = !showSettings"
+						></button>
+					</div>
+				</div>
+			</div>
+		</main>
+	</body>
+</html>

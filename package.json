@@ -1,0 +1,31 @@
+{
+	"name": "FreqVNC",
+	"version": "4.0.0",
+	"description": "A peer-to-peer, encrypted.",
+	"main": "start.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "node start.js",
+		"postinstall": "node postinstall.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/.git"
+	},
+	"keywords": [
+		"webrtc",
+		"socket.io",
+		"video"
+	],
+	"author": "Vasanth.V <imvasanthv@gmail.com>",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com//issues"
+	},
+	"homepage": "https://github.com/#readme",
+	"dependencies": {
+		"express": "^4.18.2",
+		"socket.io": "^4.5.3",
+		"vue": "^3.2.41"
+	}
+}
